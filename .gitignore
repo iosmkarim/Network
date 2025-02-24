@@ -1,8 +1,52 @@
+# macOS system files
 .DS_Store
+
+# Xcode and SwiftPM build artifacts
 /.build
+/DerivedData/
+/xcuserdata/
+.swiftpm/
+
+# Xcode project/workspace files that should not be tracked
+*.xcworkspace/
+*.xcuserstate
+*.xcscmblueprint
+
+# Swift Package Manager (SPM) related files
 /Packages
-xcuserdata/
-DerivedData/
-.swiftpm/configuration/registries.json
-.swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
+/.swiftpm/configuration/
+/.swiftpm/xcode/
+
+# Xcode auto-generated schemes
+xcshareddata/swiftpm/
+
+# Secrets and authentication files
 .netrc
+.env
+*.xcconfig
+
+# Logs & temporary files
+*.log
+*.swp
+*.swo
+*.swn
+*~
+
+# Ignore generated documentation
+docs/
+/Documentation/
+/.docc/
+
+# Ignore Carthage & CocoaPods (if applicable)
+Carthage/Build/
+Pods/
+
+# Ignore fastlane metadata (if using fastlane)
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/
+fastlane/test_output/
+
+# Ignore Playgrounds if using them
+timeline.xctimeline
+playground.xcworkspace
