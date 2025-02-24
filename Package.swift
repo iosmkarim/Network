@@ -22,5 +22,8 @@ let package = Package(
         .testTarget(
             name: "NetworkTests",
             dependencies: ["Network"]),
+        .executableTarget(
+            name: "Example",
+            dependencies: ["Network"]),
     ]
 )
