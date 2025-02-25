@@ -44,7 +44,7 @@ public enum APIError: Error {
         case .networkError(let message):
             return "Network error occurred: \(message)"
         case .serverError(let statusCode, let message):
-            return "Server error (\(statusCode)): \(message) ?? "No additional details")"
+            return "Server error (\(statusCode)): \(message ?? "No additional details")"
         case .decodingError:
             return "Failed to decode response. The data format might have changed or is incorrect."
         case .timeoutError:
@@ -58,18 +58,17 @@ public enum APIError: Error {
         case .unknownError(let message):
             return "An unknown error occurred: \(message)"
         }
-        
-        /// Maps an `HTTPURLResponse` status code to a corresponding `APIError`.
-        public static func from(statusCode: Int, message: String? = nil) -> APIError {
-            switch statusCode {
-            case 400: return .serverError(statusCode: 400, message: message ?? "Bad Request")
-            case 401: return .unauthorized
-            case 403: return .serverError(statusCode: 403, message: message ?? "Forbidden")
-            case 404: return .notFound
-            case 429: return .tooManyRequests
-            case 500...599: return .serverError(statusCode: statusCode, message: message ?? "Server encountered an error")
-            default: return .unknownError("Received unexpected status code: \(statusCode)")
-            }
+    }
+    /// Maps an `HTTPURLResponse` status code to a corresponding `APIError`.
+    public static func from(statusCode: Int, message: String? = nil) -> APIError {
+        switch statusCode {
+        case 400: return .serverError(statusCode: 400, message: message ?? "Bad Request")
+        case 401: return .unauthorized
+        case 403: return .serverError(statusCode: 403, message: message ?? "Forbidden")
+        case 404: return .notFound
+        case 429: return .tooManyRequests
+        case 500...599: return .serverError(statusCode: statusCode, message: message ?? "Server encountered an error")
+        default: return .unknownError("Received unexpected status code: \(statusCode)")
         }
     }
 }
