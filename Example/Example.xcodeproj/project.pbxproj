@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		DDD14D132D7E4718001B7D64 /* Network in Frameworks */ = {isa = PBXBuildFile; productRef = DDD14D122D7E4718001B7D64 /* Network */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		DD4531F52D6C345500E31495 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DDD14D132D7E4718001B7D64 /* Network in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +117,7 @@
 			);
 			name = Example;
 			packageProductDependencies = (
+				DDD14D122D7E4718001B7D64 /* Network */,
 			);
 			productName = Example;
 			productReference = DD4531E42D6C345300E31495 /* Example.app */;
@@ -196,6 +202,7 @@
 			mainGroup = DD4531DB2D6C345300E31495;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				DDD14D112D7E4718001B7D64 /* XCLocalSwiftPackageReference "../Network-SPM" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = DD4531E52D6C345300E31495 /* Products */;
@@ -554,6 +561,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		DDD14D112D7E4718001B7D64 /* XCLocalSwiftPackageReference "../Network-SPM" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../Network-SPM";
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		DDD14D122D7E4718001B7D64 /* Network */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Network;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = DD4531DC2D6C345300E31495 /* Project object */;
 }

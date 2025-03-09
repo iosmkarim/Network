@@ -8,7 +8,7 @@
 import Foundation
 
 
-protocol NetworkRequestProtocol {
+public protocol NetworkRequestProtocol {
     var baseURL: URL { get }
     var path: String { get }
     var httpMethod: HTTPMethod {get}
@@ -37,7 +37,7 @@ extension NetworkRequestProtocol {
         
         /// Construct URLRequest
         guard let url = urlComponents?.url else {
-            throw APIError.invalidURL
+            throw APIError.urlError
         }
         var request = URLRequest(url: url)
         
