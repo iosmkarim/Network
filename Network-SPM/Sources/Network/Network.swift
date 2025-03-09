@@ -9,20 +9,20 @@ public protocol NetworkProtocol {
     /// Makes a network request and decodes the response into the specified Codable type.
     ///
     /// - Parameters:
-    ///   - builder: A RequestBuilder instance to build the URLRequest.
+    ///   - request: A NetworkRequestProtocol instance to build the URLRequest.
     ///   - type: The expected Codable type.
     /// - Returns: A publisher emitting the decoded data or an APIError.
-    func makeRequest<T: Codable>(with builder: RequestBuilder, type: T.Type) throws -> AnyPublisher<T, APIError>
+    func makeRequest<T: Codable>(with request: NetworkRequestProtocol, type: T.Type) throws -> AnyPublisher<T, APIError>
     
     /// Asynchronously makes a network request and decodes the response into the specified Codable type.
     ///
     /// - Parameters:
-    ///   - builder: A RequestBuilder instance to build the URLRequest.
+    ///   - request: A NetworkRequestProtocol instance to build the URLRequest.
     ///   - type: The expected Codable type.
     /// - Returns: The decoded data.
     /// - Throws: An APIError if something goes wrong.
     @available(iOS 15.0, *)
-    func makeRequestAsync<T: Codable>(with builder: RequestBuilder, type: T.Type) async throws -> T
+    func makeRequestAsync<T: Codable>(with request: NetworkRequestProtocol, type: T.Type) async throws -> T
 }
 
 
@@ -32,9 +32,9 @@ public class NetworkManager: NetworkProtocol {
     
     // MARK: - Combine Implementation
     
-    public func makeRequest<T: Codable>(with builder: RequestBuilder, type: T.Type) -> AnyPublisher<T, APIError> {
+    public func makeRequest<T: Codable>(with request: NetworkRequestProtocol, type: T.Type) -> AnyPublisher<T, APIError> {
         do {
-            let request = try builder.build()
+            let request = try request.urlRequest()
             return URLSession.shared.dataTaskPublisher(for: request)
                 .subscribe(on: DispatchQueue.global(qos: .background))
                 .tryMap { data, response -> Data in
@@ -79,11 +79,11 @@ public class NetworkManager: NetworkProtocol {
     // MARK: - Async/Await Implementation (iOS 15+)
     
     @available(iOS 15.0, *)
-    public func makeRequestAsync<T: Codable>(with builder: RequestBuilder, type: T.Type) async throws -> T {
+    public func makeRequestAsync<T: Codable>(with request: NetworkRequestProtocol, type: T.Type) async throws -> T {
         // Step 1: Build the URLRequest
-        let request: URLRequest
+        let urlRequest: URLRequest
         do {
-            request = try builder.build()
+            urlRequest = try request.urlRequest()
         } catch {
             throw APIError.urlError // Invalid URL error
         }
@@ -91,7 +91,7 @@ public class NetworkManager: NetworkProtocol {
         // Step 2: Perform the network request
         let (data, response): (Data, URLResponse)
         do {
-            (data, response) = try await URLSession.shared.data(for: request)
+            (data, response) = try await URLSession.shared.data(for: urlRequest)
         } catch {
             // Handle various network errors
             if let urlError = error as? URLError {
